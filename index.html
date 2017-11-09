@@ -1,68 +1,117 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <script src="build/react.js"></script>
-    <script src="build/react-dom.js"></script>
-    <script src="build/browser.min.js"></script>
-    <script src="build/jquery.min.js"></script>
-  </head>
-  <body>
-    <center><h1 id="time"></h1></center>
-    <!--<div id="example"></div>
-    <a href = "view/view1.html">View 1</a>
-    <script type="text/babel">
-var RepoList = React.createClass({
-  getInitialState: function() {
-    return {
-      loading: true,
-      error: null,
-      data: null
-    };
-  },
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Swiper demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 
-  componentDidMount() {
-    this.props.promise.then(
-      value => this.setState({loading: false, data: value}),
-      error => this.setState({loading: false, error: error}));
-  },
+  <!-- Link Swiper's CSS -->
+  <link rel="stylesheet" href="../dist/css/swiper.min.css">
 
-  render: function() {
-    if (this.state.loading) {
-      return <span>Loading...</span>;
+  <!-- Demo styles -->
+  <style>
+    body {
+      background: #eee;
+      font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      color:#000;
+      margin: 0;
+      padding: 0;
     }
-    else if (this.state.error !== null) {
-      return <span>Error: {this.state.error.message}</span>;
+    .swiper-container {
+      width: 100%;
+      height: 300px;
+      margin: 20px auto;
     }
-    else {
-      var repos = this.state.data.items;
-      var repoList = repos.map(function (repo, index) {
-        return (
-          <li key={index}><a href={repo.html_url}>{repo.name}</a> ({repo.stargazers_count} stars) <br/> {repo.description}</li>
-        );
-      });
-      return (
-        <main>
-          <h1>Most Popular JavaScript Projects in Github</h1>
-          <ol>{repoList}</ol>
-        </main>
-      );
-    }
-  }
-});
+    .swiper-slide {
+      text-align: center;
+      font-size: 18px;
+      background: #fff;
 
-ReactDOM.render(
-  <RepoList promise={$.getJSON('https://api.github.com/search/repositories?q=javascript&sort=stars')} />,
-  document.getElementById('example')
-);
-    </script>-->
-  </body>
+      /* Center slide text vertically */
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      -webkit-align-items: center;
+      align-items: center;
+    }
+    .append-buttons {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .append-buttons a {
+      display: inline-block;
+      border: 1px solid #007aff;
+      color: #007aff;
+      text-decoration: none;
+      padding: 4px 10px;
+      border-radius: 4px;
+      margin: 0 10px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Swiper -->
+  <div class="swiper-container">
+    <div class="swiper-wrapper"></div>
+    <!-- Add Pagination -->
+    <div class="swiper-pagination"></div>
+    <!-- Add Arrows -->
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+  </div>
+  <p class="append-buttons">
+    <a href="#" class="slide-1">Slide 1</a>
+    <a href="#" class="slide-250">Slide 250</a>
+    <a href="#" class="slide-500">Slide 500</a>
+  </p>
+  <!-- Swiper JS -->
+  <script src="../dist/js/swiper.min.js"></script>
+
+  <!-- Initialize Swiper -->
   <script>
-      $(function(){
-        var ti = $("#time");
-        function refresh(){
-          ti.text((new Date()).valueOf());
-        };
-        setInterval(refresh,1);
-      })
-    </script>
+    var swiper = new Swiper('.swiper-container', {
+      slidesPerView: 3,
+      centeredSlides: true,
+      spaceBetween: 30,
+      pagination: {
+        el: '.swiper-pagination',
+        type: 'fraction',
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      virtual: {
+        slides: (function () {
+          var slides = [];
+          for (var i = 0; i < 600; i += 1) {
+            slides.push('Slide ' + (i + 1));
+          }
+          return slides;
+        }()),
+      },
+    });
+    document.querySelector('.slide-1').addEventListener('click', function (e) {
+      e.preventDefault();
+      swiper.slideTo(0, 0);
+    });
+    document.querySelector('.slide-250').addEventListener('click', function (e) {
+      e.preventDefault();
+      swiper.slideTo(249, 0);
+    });
+    document.querySelector('.slide-500').addEventListener('click', function (e) {
+      e.preventDefault();
+      swiper.slideTo(499, 0);
+    });
+  </script>
+</body>
 </html>
